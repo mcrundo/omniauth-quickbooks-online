@@ -31,7 +31,8 @@ module OmniAuth
       end
 
       def callback_url
-        options[:redirect_uri] || (full_host + script_name + callback_path)
+        "https://9734-2601-152-c00-1880-9d2a-2a5-629e-4bb6.ngrok.io/quickbooks/oauth2-redirect"
+      
       end
 
       private
