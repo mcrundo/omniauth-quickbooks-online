@@ -3,6 +3,7 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class QuickbooksOauth2 < OmniAuth::Strategies::OAuth2
+      ACCOUNTS_DOMAIN = 'accounts.platform.intuit.com'
       option :name, :quickbooks_oauth2
 
       option(
@@ -26,7 +27,7 @@ module OmniAuth
 
       def raw_info
         @raw_info ||= options.scope.split(/\s+/).include?('openid') ?
-          JSON.parse(access_token.get("https://#{accounts_domain}/v1/openid_connect/userinfo").body) :
+          JSON.parse(access_token.get("https://#{ACCOUNTS_DOMAIN}/v1/openid_connect/userinfo").body) :
           {}
       end
 
@@ -35,10 +36,6 @@ module OmniAuth
       end
 
       private
-
-      def accounts_domain
-        'accounts.platform.intuit.com'
-      end
     end
   end
 end
