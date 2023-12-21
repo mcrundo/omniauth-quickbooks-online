@@ -26,12 +26,14 @@ module OmniAuth
       end
 
       def raw_info
+        p "raw_info"
         @raw_info ||= options.scope.split(/\s+/).include?('openid') ?
           JSON.parse(access_token.get("https://#{ACCOUNTS_DOMAIN}/v1/openid_connect/userinfo").body) :
           {}
       end
 
       def callback_url
+        p "callback_url"
         options[:redirect_uri] || (full_host + script_name + callback_path)
       end
 
