@@ -37,7 +37,7 @@ module OmniAuth
       private
 
       def accounts_domain
-        false == options.sandbox ? 'accounts.platform.intuit.com' : 'sandbox-accounts.platform.intuit.com'
+        'accounts.platform.intuit.com'
       end
     end
   end
