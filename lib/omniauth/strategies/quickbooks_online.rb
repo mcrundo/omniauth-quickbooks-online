@@ -2,12 +2,12 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class Quickbooks < OmniAuth::Strategies::OAuth2
+    class QuickbooksOnline < OmniAuth::Strategies::OAuth2
       module Defaults
         ACCOUNTS_DOMAIN = 'accounts.platform.intuit.com'.freeze
       end
 
-      option :name, :quickbooks
+      option :name, :quickbooks_online
 
       option(
         :client_options,

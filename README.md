@@ -7,7 +7,7 @@ This gem provides an Omniauth strategy to connect with Quickbooks (via Intuit) u
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'omniauth-quickbooks'
+gem 'omniauth-quickbooks-online'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install omniauth-quickbooks
+    $ gem install omniauth-quickbooks-online
 
 ## Usage
 
@@ -44,7 +44,7 @@ end
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/abeland/omniauth-quickbooks.
+Bug reports and pull requests are welcome on GitHub at https://github.com/abeland/omniauth-quickbooks-online.
 
 ## License
 
