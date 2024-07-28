@@ -28,6 +28,10 @@ module OmniAuth
         { raw_info: raw_info }
       end
 
+      def callback_url
+        options[:redirect_uri]
+      end
+
       def raw_info
         @raw_info ||= raw_info_valid? ? parsed_body : {}
       end
