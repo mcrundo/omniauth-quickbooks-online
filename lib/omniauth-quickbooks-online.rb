@@ -1,2 +1,2 @@
 require 'omniauth-quickbooks-online/version'
-require 'omniauth/strategies/quickbooks-online'
+require 'omniauth/strategies/quickbooks_online'
