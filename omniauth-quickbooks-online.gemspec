@@ -1,16 +1,16 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "omniauth-quickbooks/version"
+require "omniauth-quickbooks-online/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "omniauth-quickbooks"
-  spec.version       = OmniAuth::Quickbooks::VERSION
+  spec.name          = "omniauth-quickbooks-online"
+  spec.version       = OmniAuth::QuickbooksOnline::VERSION
   spec.authors       = ["various"]
   spec.email         = ["job@bluth.co"]
 
   spec.summary       = 'OAuth2 Omniauth strategy for Quickbooks.'
   spec.description   = 'OAuth2 Omniauth straetgy for Quickbooks (Intuit) API.'
-  spec.homepage      = 'https://github.com/CanalWestStudio/omniauth-quickbooks'
+  spec.homepage      = 'https://github.com/CanalWestStudio/omniauth-quickbooks-online'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split("\n")
