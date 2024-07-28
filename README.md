@@ -1,4 +1,4 @@
-# [omniauth-quickbooks-oauth2](https://rubygems.org/gems/omniauth-quickbooks-oauth2)
+# [omniauth-quickbooks](https://rubygems.org/gems/omniauth-quickbooks)
 
 This gem provides an Omniauth strategy to connect with Quickbooks (via Intuit) using OAuth2.
 
@@ -7,7 +7,7 @@ This gem provides an Omniauth strategy to connect with Quickbooks (via Intuit) u
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'omniauth-quickbooks-oauth2'
+gem 'omniauth-quickbooks'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install omniauth-quickbooks-oauth2
+    $ gem install omniauth-quickbooks
 
 ## Usage
 
@@ -26,7 +26,7 @@ In your omniauth initializer file (e.g. `config/initializers/omniauth.rb`), you 
 Rails.application.config.middleware.use OmniAuth::Builder do
   ...
   provider(
-    :quickbooks_oauth2,
+    :quickbooks,
     ENV['INTUIT_CLIENT_ID'],
     ENV['INTUIT_CLIENT_SECRET'],
     scope: 'com.intuit.quickbooks.accounting openid profile email phone address',
@@ -44,7 +44,7 @@ end
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/abeland/omniauth-quickbooks-oauth2.
+Bug reports and pull requests are welcome on GitHub at https://github.com/abeland/omniauth-quickbooks.
 
 ## License
 
