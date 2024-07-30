@@ -4,7 +4,7 @@ module OmniAuth
   module Strategies
     class QuickbooksOnline < OmniAuth::Strategies::OAuth2
       module Defaults
-        ACCOUNTS_DOMAIN = 'accounts.platform.intuit.com'.freeze
+        ACCOUNTS_DOMAIN = 'accounts.platform.intuit.com/v1/openid_connect/userinfo'.freeze
       end
 
       option :name, :quickbooks_online
@@ -18,40 +18,34 @@ module OmniAuth
         },
       )
 
-      uid { request.params['realmId'] }
+      uid { info['sub'] }
 
       info do
         raw_info
       end
 
       extra do
-        { raw_info: raw_info }
+        { 
+          realm_id: request.params['realmId'] 
+        }
       end
 
       def callback_url
-        options[:redirect_uri] || full_host + script_name + callback_path
-      end
-
-      def raw_info
-        @raw_info ||= raw_info_valid? ? parsed_body : {}
+        options[:redirect_uri] || (full_host + script_name + callback_path)
       end
 
       private
 
+      def raw_info
+        @raw_info = parsed_body
+      end
+
       def parsed_body
-        JSON.parse(access_token.get("https://#{ Defaults::ACCOUNTS_DOMAIN }/v1/openid_connect/userinfo").body)
+        JSON.parse api_response
       end
 
-      def raw_info_valid?
-        split_options_scope.include?('openid')
-      end
-
-      def split_options_scope
-        options_scope.split(/\s+/)
-      end
-
-      def options_scope
-        options.scope
+      def api_response
+        @_api_response ||= access_token.get("https://#{ Defaults::ACCOUNTS_DOMAIN }").body
       end
     end
   end
