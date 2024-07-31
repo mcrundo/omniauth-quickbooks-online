@@ -20,8 +20,10 @@ module OmniAuth
 
       uid { info['sub'] }
 
+      name { name_string }
+
       info do
-        raw_info
+        parsed_body
       end
 
       extra do
@@ -36,8 +38,18 @@ module OmniAuth
 
       private
 
-      def raw_info
-        @raw_info = parsed_body
+      def name_string
+        "#{given_name} #{family_name}"
+      end
+
+      # first_name
+      def given_name
+        info['givenName'] ? info['givenName']&.titlecase : "-"
+      end
+
+      # last_name
+      def family_name
+        info['familyName'] ? info['familyName']&.titlecase : "-"
       end
 
       def parsed_body
