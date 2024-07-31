@@ -20,8 +20,6 @@ module OmniAuth
 
       uid { info['sub'] }
 
-      name { name_string }
-
       info do
         parsed_body
       end
@@ -38,26 +36,22 @@ module OmniAuth
 
       private
 
-      def name_string
-        "#{given_name} #{family_name}"
+      def parsed_name
+        "#{info['givenName']} #{info['familyName']}"
       end
 
-      # first_name
-      def given_name
-        info['givenName'] ? info['givenName']&.titlecase : "-"
-      end
-
-      # last_name
-      def family_name
-        info['familyName'] ? info['familyName']&.titlecase : "-"
+      def auth_hash
+        super.tap do |auth|
+          auth.info.name = parsed_name
+        end
       end
 
       def parsed_body
-        JSON.parse api_response
+        @_parsed_body ||= JSON.parse api_response
       end
 
       def api_response
-        @_api_response ||= access_token.get("https://#{ Defaults::ACCOUNTS_DOMAIN }").body
+        access_token.get("https://#{ Defaults::ACCOUNTS_DOMAIN }").body
       end
     end
   end
