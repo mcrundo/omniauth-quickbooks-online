@@ -1,4 +1,5 @@
 require 'omniauth-oauth2'
+require 'jwt'
 
 module OmniAuth
   module Strategies
@@ -26,7 +27,8 @@ module OmniAuth
 
       extra do
         { 
-          realm_id: request.params['realmId'] 
+          claims: decoded_id_token,
+          scope: options.scope
         }
       end
 
@@ -35,6 +37,13 @@ module OmniAuth
       end
 
       private
+
+      delegate :params, to: :access_token
+      delegate :id_token, to: :params
+
+      def decoded_id_token
+        JWT.decode id_token, options.client_secret, false, { algorithm: 'RS256' }
+      end
 
       def parsed_name
         "#{info['givenName']} #{info['familyName']}"
