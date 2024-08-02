@@ -19,7 +19,7 @@ module OmniAuth
         },
       )
 
-      uid { info['sub'] }
+      uid { decoded_id_token['sub'] }
 
       info do
         parsed_body
@@ -42,7 +42,7 @@ module OmniAuth
       delegate :id_token, to: :params
 
       def decoded_id_token
-        JWT.decode id_token, options.client_secret, false, { algorithm: 'RS256' }
+        JWT.decode(id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
       end
 
       def parsed_name
