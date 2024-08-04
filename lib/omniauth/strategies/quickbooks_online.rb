@@ -19,10 +19,10 @@ module OmniAuth
         },
       )
 
-      uid { decoded_id_token['sub'] }
+      uid { raw_info['sub'] }
 
       info do
-        parsed_body
+        raw_info
       end
 
       extra do
@@ -36,31 +36,23 @@ module OmniAuth
         options[:redirect_uri] || (full_host + script_name + callback_path)
       end
 
-      private
-
-      delegate :params, to: :access_token
-      delegate :id_token, to: :params
-
-      def decoded_id_token
-        JWT.decode(id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
-      end
-
-      def parsed_name
-        "#{info['givenName']} #{info['familyName']}"
-      end
-
       def auth_hash
         super.tap do |auth|
-          auth.info.name = parsed_name
+          auth.info.first_name = raw_info['givenName']
+          auth.info.last_name = raw_info['familyName']
         end
       end
 
-      def parsed_body
-        @_parsed_body ||= JSON.parse api_response
+      def raw_info
+        @_raw_info ||= access_token.get("https://#{ Defaults::ACCOUNTS_DOMAIN }").parsed
       end
 
-      def api_response
-        access_token.get("https://#{ Defaults::ACCOUNTS_DOMAIN }").body
+      private
+
+      delegate :params, to: :access_token
+
+      def decoded_id_token
+        JWT.decode(params.id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
       end
     end
   end
