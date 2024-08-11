@@ -28,12 +28,14 @@ module OmniAuth
       extra do
         { 
           claims: decoded_id_token,
-          scope: options.scope
+          provider_scope: state_hash['provider_scope'],
+          realm_id: realm_id,
+          scope: state_hash['scope']
         }
       end
 
       def callback_url
-        options[:redirect_uri] || (full_host + script_name + callback_path)
+        full_host + callback_path
       end
 
       def auth_hash
@@ -53,6 +55,14 @@ module OmniAuth
 
       def decoded_id_token
         JWT.decode(params.id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
+      end
+
+      def realm_id
+        request.params['realmId']
+      end
+
+      def state_hash
+        @_state_hash = URI.decode_www_form(request.params['state']).to_h
       end
     end
   end
