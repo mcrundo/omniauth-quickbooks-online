@@ -54,15 +54,15 @@ module OmniAuth
       delegate :params, to: :access_token
 
       def decoded_id_token
-        JWT.decode(params.id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
+        @decoded_id_token = JWT.decode(params.id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
       end
 
       def realm_id
-        request.params['realmId']
+        @realm_id = Integer request.params['realmId'] rescue nil
       end
 
       def state_hash
-        @_state_hash = URI.decode_www_form(request.params['state']).to_h
+        @state_hash = URI.decode_www_form(request.params['state']).to_h
       end
     end
   end
