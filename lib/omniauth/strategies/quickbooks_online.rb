@@ -28,7 +28,7 @@ module OmniAuth
       extra do
         { 
           claims: decoded_id_token,
-          provider_scope: state_hash['provider_scope'],
+          provider_scope: provider_scope,
           realm_id: realm_id,
           scope: state_hash['scope']
         }
@@ -55,6 +55,11 @@ module OmniAuth
 
       def decoded_id_token
         @decoded_id_token = JWT.decode(params.id_token, options.client_secret, false, { algorithm: 'RS256' })&.first
+      end
+
+      def provider_scope
+        return nil if state_hash['provider_scope'].empty?
+        state_hash['provider_scope']
       end
 
       def realm_id
